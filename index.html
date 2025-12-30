@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="bn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>জীবনীকথা | বিখ্যাত মানুষের জীবনী</title>
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600;700&family=Tiro+Bangla:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+    <!-- Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <style>
+      :root {
+        --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        --dark-bg: #0a0e27;
+        --card-bg: rgba(255, 255, 255, 0.05);
+        --text-light: #e2e8f0;
+        --text-muted: #94a3b8;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Hind Siliguri", sans-serif;
+        background-color: var(--dark-bg);
+        color: var(--text-light);
+        overflow-x: hidden;
+        line-height: 1.6;
+      }
+
+      /* Animated Background */
+      .animated-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background: linear-gradient(45deg, #0a0e27, #1a1f3a, #0a0e27);
+        background-size: 400% 400%;
+        animation: gradientShift 15s ease infinite;
+      }
+
+      @keyframes gradientShift {
+        0%,
+        100% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+      }
+
+      /* Floating Particles */
+      .particle {
+        position: fixed;
+        width: 4px;
+        height: 4px;
+        background: rgba(102, 126, 234, 0.5);
+        border-radius: 50%;
+        animation: float 20s infinite;
+        z-index: -1;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translate(0, 0) rotate(0deg);
+          opacity: 0;
+        }
+        10%,
+        90% {
+          opacity: 1;
+        }
+        50% {
+          transform: translate(100vw, -100vh) rotate(360deg);
+        }
+      }
+
+      /* Header */
+      header {
+        padding: 2rem 5%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        backdrop-filter: blur(10px);
+        background: rgba(10, 14, 39, 0.8);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .logo {
+        font-size: 2rem;
+        font-weight: 700;
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-family: "Tiro Bangla", serif;
+      }
+
+      nav a {
+        color: var(--text-light);
+        text-decoration: none;
+        margin-left: 2rem;
+        font-weight: 500;
+        transition: all 0.3s;
+        position: relative;
+      }
+
+      nav a::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--primary-gradient);
+        transition: width 0.3s;
+      }
+
+      nav a:hover::after {
+        width: 100%;
+      }
+
+      /* Hero Section */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 0 5%;
+        margin-top: 80px;
+      }
+
+      .hero-content h1 {
+        font-size: clamp(2.5rem, 8vw, 5rem);
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-family: "Tiro Bangla", serif;
+        line-height: 1.2;
+      }
+
+      .hero-content p {
+        font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+        color: var(--text-muted);
+        margin-bottom: 3rem;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .scroll-indicator {
+        position: absolute;
+        bottom: 3rem;
+        left: 50%;
+        transform: translateX(-50%);
+        animation: bounce 2s infinite;
+      }
+
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateX(-50%) translateY(0);
+        }
+        40% {
+          transform: translateX(-50%) translateY(-20px);
+        }
+        60% {
+          transform: translateX(-50%) translateY(-10px);
+        }
+      }
+
+      /* Biography Cards Section */
+      .biographies {
+        padding: 6rem 5%;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .section-title {
+        font-size: clamp(2rem, 5vw, 3rem);
+        text-align: center;
+        margin-bottom: 4rem;
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-family: "Tiro Bangla", serif;
+      }
+
+      .bio-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 3rem;
+        margin-top: 3rem;
+      }
+
+      .bio-card {
+        position: relative;
+        border-radius: 20px;
+        overflow: hidden;
+        backdrop-filter: blur(10px);
+        background: var(--card-bg);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        height: 500px;
+      }
+
+      .bio-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--primary-gradient);
+        opacity: 0;
+        transition: opacity 0.5s;
+        z-index: 0;
+      }
+
+      .bio-card:hover::before {
+        opacity: 0.1;
+      }
+
+      .bio-card:hover {
+        transform: translateY(-15px);
+        box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+        border-color: rgba(102, 126, 234, 0.5);
+      }
+
+      .bio-image {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        object-position: top center;
+        transition: transform 0.5s;
+      }
+
+      .bio-card:hover .bio-image {
+        transform: scale(1.1);
+      }
+
+      .bio-content {
+        padding: 2rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .bio-content h3 {
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+        color: var(--text-light);
+        font-family: "Tiro Bangla", serif;
+      }
+
+      .bio-content p {
+        color: var(--text-muted);
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .read-more {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #667eea;
+        font-weight: 600;
+        text-decoration: none;
+        transition: gap 0.3s;
+      }
+
+      .read-more:hover {
+        gap: 1rem;
+      }
+
+      .read-more i {
+        transition: transform 0.3s;
+      }
+
+      .bio-card:hover .read-more i {
+        transform: translateX(5px);
+      }
+
+      /* Footer */
+      footer {
+        text-align: center;
+        padding: 3rem 5%;
+        background: rgba(0, 0, 0, 0.3);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        margin-top: 4rem;
+      }
+
+      footer p {
+        color: var(--text-muted);
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        header {
+          padding: 1.5rem 5%;
+        }
+
+        .logo {
+          font-size: 1.5rem;
+        }
+
+        nav {
+          display: none;
+        }
+
+        .bio-grid {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        .hero {
+          margin-top: 60px;
+        }
+      }
+
+      /* Loading Animation */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .fade-in-up {
+        animation: fadeInUp 0.8s ease-out;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+
+    <!-- Floating Particles -->
+    <script>
+      for (let i = 0; i < 20; i++) {
+        const particle = document.createElement("div");
+        particle.className = "particle";
+        particle.style.left = Math.random() * 100 + "%";
+        particle.style.top = Math.random() * 100 + "%";
+        particle.style.animationDelay = Math.random() * 20 + "s";
+        particle.style.animationDuration = Math.random() * 20 + 10 + "s";
+        document.body.appendChild(particle);
+      }
+    </script>
+
+    <!-- Header -->
+    <header>
+      <div class="logo">জীবনীকথা</div>
+      <nav>
+        <a href="#home">হোম</a>
+        <a href="#biographies">জীবনী সমূহ</a>
+        <a href="#about">পরিচিতি</a>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <div class="hero-content" data-aos="fade-up">
+        <h1>বিখ্যাত মানুষের জীবনী</h1>
+        <p>
+          ইতিহাসের মহান ব্যক্তিত্ব এবং তাদের অসাধারণ জীবন কাহিনী আবিষ্কার করুন।
+          প্রতিটি জীবনী একটি অনুপ্রেরণার উৎস।
+        </p>
+      </div>
+      <div class="scroll-indicator">
+        <i
+          class="fas fa-chevron-down"
+          style="font-size: 2rem; color: rgba(102, 126, 234, 0.7)"
+        ></i>
+      </div>
+    </section>
+
+    <!-- Biographies Section -->
+    <section class="biographies" id="biographies">
+      <h2 class="section-title" data-aos="fade-up">জীবনী সংগ্রহ</h2>
+
+      <div class="bio-grid">
+        <!-- Khaleda Zia Card -->
+        <div class="bio-card" data-aos="fade-up" data-aos-delay="100">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/8/86/Khaleda_Zia_%28cropped%29.jpg"
+            alt="বেগম খালেদা জিয়া"
+            class="bio-image"
+          />
+          <div class="bio-content">
+            <h3>বেগম খালেদা জিয়া</h3>
+            <p>
+              বাংলাদেশের প্রথম নারী প্রধানমন্ত্রী এবং একজন বিশিষ্ট রাজনীতিবিদ
+            </p>
+            <a href="khaledazia/index.html" class="read-more">
+              সম্পূর্ণ জীবনী পড়ুন <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- More biography cards will be added here -->
+        <div
+          class="bio-card"
+          data-aos="fade-up"
+          data-aos-delay="200"
+          style="opacity: 0.5; pointer-events: none"
+        >
+          <div
+            style="
+              height: 300px;
+              background: linear-gradient(
+                135deg,
+                rgba(102, 126, 234, 0.2),
+                rgba(118, 75, 162, 0.2)
+              );
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            "
+          >
+            <i
+              class="fas fa-plus"
+              style="font-size: 4rem; color: rgba(255, 255, 255, 0.3)"
+            ></i>
+          </div>
+          <div class="bio-content">
+            <h3>শীঘ্রই আসছে...</h3>
+            <p>নতুন জীবনী শীঘ্রই যুক্ত হবে</p>
+          </div>
+        </div>
+
+        <div
+          class="bio-card"
+          data-aos="fade-up"
+          data-aos-delay="300"
+          style="opacity: 0.5; pointer-events: none"
+        >
+          <div
+            style="
+              height: 300px;
+              background: linear-gradient(
+                135deg,
+                rgba(102, 126, 234, 0.2),
+                rgba(118, 75, 162, 0.2)
+              );
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            "
+          >
+            <i
+              class="fas fa-plus"
+              style="font-size: 4rem; color: rgba(255, 255, 255, 0.3)"
+            ></i>
+          </div>
+          <div class="bio-content">
+            <h3>শীঘ্রই আসছে...</h3>
+            <p>নতুন জীবনী শীঘ্রই যুক্ত হবে</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p>&copy; ২০২৫ জীবনীকথা | সকল অধিকার সংরক্ষিত</p>
+      <p style="margin-top: 0.5rem; font-size: 0.9rem">
+        ইতিহাসের মহান ব্যক্তিত্বদের জীবন থেকে শিখুন
+      </p>
+    </footer>
+
+    <!-- AOS Animation Script -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        duration: 1000,
+        once: true,
+        offset: 100,
+      });
+
+      // Header scroll effect
+      window.addEventListener("scroll", () => {
+        const header = document.querySelector("header");
+        if (window.scrollY > 100) {
+          header.style.background = "rgba(10, 14, 39, 0.95)";
+          header.style.boxShadow = "0 5px 20px rgba(0,0,0,0.3)";
+        } else {
+          header.style.background = "rgba(10, 14, 39, 0.8)";
+          header.style.boxShadow = "none";
+        }
+      });
+
+      // Smooth scroll for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
